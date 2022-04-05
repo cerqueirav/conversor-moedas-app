@@ -1,6 +1,4 @@
 class Urls {
-  //static const String version = 'v2';
-
   static const String baseUrlEUR =
       'https://economia.awesomeapi.com.br/json/EUR-';
 
