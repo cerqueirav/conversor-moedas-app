@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 import 'package:moedas_app/models/Moeda.dart';
+import 'package:moedas_app/utils/Enum/coins.dart';
+import 'package:moedas_app/utils/money_Conversion.dart';
 
-Future<List<Moeda>?> listar() async {
-  var url = Uri.parse("https://economia.awesomeapi.com.br/json/EUR-BRL/");
+Future<List<Moeda>?> converterMoedas(Coin coinOne, Coin coinTwo) async {
+  var url = Uri.parse(selectCoin(coinOne, coinTwo));
+
   var response = await http.get(url);
 
   if (response.statusCode == 200) {

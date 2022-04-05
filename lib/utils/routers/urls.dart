@@ -1,6 +1,5 @@
 class Urls {
-  static const String baseUrlEUR =
-      'https://economia.awesomeapi.com.br/json/EUR-';
+  static String baseUrl = 'https://economia.awesomeapi.com.br/json/';
 
   static const String routerAllCoins = "all/";
   static const String routerPeso = "BRL/";

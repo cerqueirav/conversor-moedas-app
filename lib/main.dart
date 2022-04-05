@@ -1,8 +1,11 @@
-import 'package:moedas_app/controllers/api.dart';
+import 'package:flutter/material.dart';
+import 'package:moedas_app/pages/moeda_base_page.dart';
+import 'package:moedas_app/services/moeda_route.dart';
+import 'package:moedas_app/utils/Enum/coins.dart';
 
 void main() async {
-  final repository = await listar();
+  final repository = await converterMoedas(Coin.BRL, Coin.EUR);
+  print(repository?.first.name);
 
-  print(repository?.first.high);
-  //runApp(MaterialApp(home: MoedaBasePage()));
+  runApp(MaterialApp(home: MoedaBasePage()));
 }
