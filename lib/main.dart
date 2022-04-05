@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:moedas_app/pages/moeda_base_page.dart';
+import 'package:moedas_app/controllers/api.dart';
 
 void main() async {
-  runApp(MaterialApp(home: MoedaBasePage()));
+  final repository = await listar();
+
+  print(repository?.first.high);
+  //runApp(MaterialApp(home: MoedaBasePage()));
 }
