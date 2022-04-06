@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:moedas_app/models/Moeda.dart';
-import 'package:moedas_app/utils/Enum/coins.dart';
+import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/money_Conversion.dart';
 
 Future<List<Moeda>?> converterMoedas(Coin coinOne, Coin coinTwo) async {

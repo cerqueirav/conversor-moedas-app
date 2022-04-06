@@ -1,21 +1,20 @@
+import 'package:moedas_app/utils/Enum/coin.dart';
+
 class CotacaoController {
-  String _moedaEscolhida;
+  List<Coin> listaDeMoedas = fetchCoins();
+  String moedaEscolhida;
 
-  List<String> _listaDeMoedas = [
-    'Real',
-    'Dólar Americano ',
-    'Libra Esterlina',
-    'Iene',
-    'Peso Argentino'
-  ];
-
-  CotacaoController(this._moedaEscolhida, this._listaDeMoedas);
+  CotacaoController(this.moedaEscolhida);
 
   void atualizaLista(String moedaEscolhida) {
-    _listaDeMoedas.remove(moedaEscolhida);
+    for (int i = 0; i < listaDeMoedas.length; i++) {
+      if (listaDeMoedas.elementAt(i).name.toString() == moedaEscolhida) {
+        listaDeMoedas.remove(listaDeMoedas.elementAt(i));
+      }
+    }
   }
 
-  List<String> getLista() {
-    return _listaDeMoedas;
+  List<Enum> getLista() {
+    return listaDeMoedas;
   }
 }

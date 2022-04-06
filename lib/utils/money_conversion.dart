@@ -1,4 +1,4 @@
-import 'package:moedas_app/utils/Enum/coins.dart';
+import 'package:moedas_app/utils/Enum/coin.dart';
 
 String selectCoin(Coin coinOne, Coin coinTwo) {
   String urlBase = "https://economia.awesomeapi.com.br/json/";
