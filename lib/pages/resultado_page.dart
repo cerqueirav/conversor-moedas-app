@@ -13,23 +13,10 @@ class ResultadoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-        title: "Resultado",
-        theme: new ThemeData(primarySwatch: Colors.grey),
-        debugShowCheckedModeBanner: false,
-        home: new ListViewBuilder(_controller, moedaEscolhida));
-  }
-}
-
-class ListViewBuilder extends StatelessWidget {
-  MoedaBaseController _controller = MoedaBaseController();
-  String moedaEscolhida;
-
-  ListViewBuilder(this._controller, this.moedaEscolhida);
-  @override
-  Widget build(BuildContext context) {
     var moedaNome = _controller.getMoedaName(moedaEscolhida);
     _controller.atualizaLista(moedaEscolhida);
+    int countMoedas = 0;
+    MoedaBaseController controller = this._controller;
     return Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -92,8 +79,7 @@ class ListViewBuilder extends StatelessWidget {
                                     fontWeight: FontWeight.w400),
                               ),
                               onTap: () {
-                                _controller.listaProxima
-                                    .add(_controller.listaDeMoedas[index].name);
+                                // Criar lógica
                               },
                             ),
                           )),

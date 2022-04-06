@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:moedas_app/controllers/cotacao_controller.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
+import 'package:moedas_app/main.dart';
 import 'package:moedas_app/pages/resultado_page.dart';
-import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 
 class CotacaoPage extends StatelessWidget {
@@ -14,6 +13,7 @@ class CotacaoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var moedaNome = _controller.getMoedaName(moedaEscolhida);
     _controller.atualizaLista(moedaEscolhida);
+    int countMoedas = 0;
     return Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -76,8 +76,10 @@ class CotacaoPage extends StatelessWidget {
                                     fontWeight: FontWeight.w400),
                               ),
                               onTap: () {
-                                _controller.listaProxima
-                                    .add(_controller.listaDeMoedas[index].name);
+                                setState() {
+                                  _controller.atualizaLista(
+                                      _controller.listaDeMoedas[index].name);
+                                }
                               },
                             ),
                           )),
@@ -99,10 +101,11 @@ class CotacaoPage extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ResultadoPage(moedaEscolhida),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ResultadoPage(moedaEscolhida)),
+                      );
                     },
                   ),
                 ),

@@ -2,7 +2,7 @@ import 'package:moedas_app/utils/Enum/coin.dart';
 
 class MoedaBaseController {
   List<Coin> listaDeMoedas = fetchCoins();
-  List<String> listaProxima = [];
+  List<Coin> listaProxima = fetchCoins();
 
   List<Coin> getLista() {
     return listaDeMoedas;
