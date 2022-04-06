@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moedas_app/controllers/cotacao_controller.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
 import 'package:moedas_app/pages/resultado_page.dart';
+import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 
 class CotacaoPage extends StatelessWidget {
@@ -36,50 +37,76 @@ class CotacaoPage extends StatelessWidget {
               child: Text(
                 'Selecione as moedas a serem cotadas na moeda $moedaNome',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 18,
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
                 ),
                 textAlign: TextAlign.center,
               ),
               height: 48,
-              width: 400,
+              width: 380,
             ),
             Center(
-                child: Container(
-              height: 570,
-              width: 380,
-              child: ListView.builder(
-                  itemCount: _controller.listaDeMoedas.length,
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-                  itemBuilder: (context, index) => Card(
-                        borderOnForeground: false,
-                        color: Colors.grey.shade800,
-                        elevation: 3,
-                        margin: EdgeInsets.all(7),
-                        child: ListTile(
-                          minLeadingWidth: 10,
-                          leading: const Icon(
-                            Icons.attach_money,
-                            color: backgroundIconColor,
-                          ),
-                          title: Text(
-                            _controller.getMoedaName(
-                                _controller.listaDeMoedas[index].name),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ResultadoPage(),
-                                ));
-                          },
-                        ),
-                      )),
+                child: Column(
+              children: [
+                Container(
+                  height: 450,
+                  width: 380,
+                  child: ListView.builder(
+                      itemCount: _controller.listaDeMoedas.length,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+                      itemBuilder: (context, index) => Card(
+                            borderOnForeground: false,
+                            color: Colors.grey.shade800,
+                            elevation: 3,
+                            margin: EdgeInsets.all(7),
+                            child: ListTile(
+                              minLeadingWidth: 10,
+                              leading: const Icon(
+                                Icons.attach_money,
+                                color: backgroundIconColor,
+                              ),
+                              title: Text(
+                                _controller.getMoedaName(
+                                    _controller.listaDeMoedas[index].name),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              onTap: () {
+                                _controller.listaProxima
+                                    .add(_controller.listaDeMoedas[index].name);
+                              },
+                            ),
+                          )),
+                ),
+                Container(
+                  padding: EdgeInsetsDirectional.all(20),
+                  alignment: Alignment.bottomRight,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                      backgroundColor: titleCardColor,
+                    ),
+                    child: Text(
+                      'Próximo',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ResultadoPage(moedaEscolhida),
+                          ));
+                    },
+                  ),
+                ),
+              ],
             )),
           ],
         )));

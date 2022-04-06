@@ -30,7 +30,7 @@ class MoedaBasePage extends StatelessWidget {
               child: Text(
                 'Selecione uma moeda base para as conversões',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 18,
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
                 ),
@@ -62,7 +62,7 @@ class MoedaBasePage extends StatelessWidget {
                                 _controller.listaDeMoedas[index].name),
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w400),
                           ),
                           onTap: () {
