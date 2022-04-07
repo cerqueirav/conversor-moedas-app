@@ -63,47 +63,49 @@ class _ResultadoPageState extends State<ResultadoPage> {
                 child: Column(
               children: [
                 Container(
-                  height: 450,
-                  width: 380,
-                  child: ListView.builder(
-                      itemCount: widget._controller.listaCoinModel.length,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-                      itemBuilder: (context, index) => Card(
-                            borderOnForeground: false,
-                            color: Colors.grey.shade800,
-                            elevation: 3,
-                            margin: EdgeInsets.all(7),
-                            child: Container(
-                              child: ListTile(
-                                trailing: Text(
-                                  widget
-                                      ._controller.listaCoinModel[index].price,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400),
+                    height: 450,
+                    width: 380,
+                    child: RefreshIndicator(
+                      onRefresh: () => _refresh(),
+                      child: ListView.builder(
+                          itemCount: widget._controller.listaCoinModel.length,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+                          itemBuilder: (context, index) => Card(
+                                borderOnForeground: false,
+                                color: Colors.grey.shade800,
+                                elevation: 3,
+                                margin: EdgeInsets.all(7),
+                                child: Container(
+                                  child: ListTile(
+                                    trailing: Text(
+                                      widget._controller.listaCoinModel[index]
+                                          .price,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    minLeadingWidth: 10,
+                                    leading: const Icon(
+                                      Icons.attach_money,
+                                      color: backgroundIconColor,
+                                    ),
+                                    title: Text(
+                                      getNameCoin(widget._controller
+                                          .listaCoinModel[index].coin.name),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    onTap: () {
+                                      // Criar lógica
+                                    },
+                                  ),
                                 ),
-                                minLeadingWidth: 10,
-                                leading: const Icon(
-                                  Icons.attach_money,
-                                  color: backgroundIconColor,
-                                ),
-                                title: Text(
-                                  getNameCoin(widget._controller
-                                      .listaCoinModel[index].coin.name),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                onTap: () {
-                                  // Criar lógica
-                                },
-                              ),
-                            ),
-                          )),
-                ),
+                              )),
+                    )),
                 Container(
                   padding: EdgeInsetsDirectional.all(20),
                   alignment: Alignment.bottomRight,
@@ -134,5 +136,9 @@ class _ResultadoPageState extends State<ResultadoPage> {
             )),
           ],
         )));
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(Duration(seconds: 0));
   }
 }

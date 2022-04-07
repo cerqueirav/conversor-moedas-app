@@ -27,16 +27,14 @@ class MoedaBaseController extends ChangeNotifier {
         listaDeMoedas.remove(listaDeMoedas.elementAt(i));
       }
     }
-    notifyListeners();
   }
 
   void fetchCoinModel() async {
-    for (int i = 0; i < listaProxima.length; i++) {
+    for (int i = 0; i < listaDeMoedas.length; i++) {
       final repository = await MoedaRoute()
-          .buscarValor(moedaEscolhida, listaProxima.elementAt(i));
+          .buscarValor(moedaEscolhida, listaDeMoedas.elementAt(i));
       listaCoinModel
-          .add(CoinModel(listaProxima.elementAt(i), repository.toString()));
-      notifyListeners();
+          .add(CoinModel(listaDeMoedas.elementAt(i), repository.toString()));
     }
   }
 }
