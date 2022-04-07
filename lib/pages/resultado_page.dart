@@ -1,22 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:moedas_app/controllers/cotacao_controller.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
-import 'package:moedas_app/models/Moeda.dart';
 import 'package:moedas_app/pages/moeda_base_page.dart';
+import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 
-class ResultadoPage extends StatelessWidget {
-  String moedaEscolhida;
-  final _controller = MoedaBaseController();
+class ResultadoPage extends StatefulWidget {
+  final MoedaBaseController _controller;
+  ResultadoPage(this._controller);
 
-  ResultadoPage(this.moedaEscolhida);
+  @override
+  State<ResultadoPage> createState() => _ResultadoPageState();
+}
+
+class _ResultadoPageState extends State<ResultadoPage> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 1), () => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
-    var moedaNome = _controller.getMoedaName(moedaEscolhida);
-    _controller.atualizaLista(moedaEscolhida);
-    int countMoedas = 0;
-    MoedaBaseController controller = this._controller;
+    widget._controller.atualizaLista();
+    widget._controller.fetchCoinModel();
+    var moedaNome = getNameCoin(widget._controller.moedaEscolhida.name);
+
     return Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -56,7 +66,7 @@ class ResultadoPage extends StatelessWidget {
                   height: 450,
                   width: 380,
                   child: ListView.builder(
-                      itemCount: _controller.listaDeMoedas.length,
+                      itemCount: widget._controller.listaCoinModel.length,
                       padding:
                           EdgeInsets.symmetric(horizontal: 5, vertical: 12),
                       itemBuilder: (context, index) => Card(
@@ -64,23 +74,33 @@ class ResultadoPage extends StatelessWidget {
                             color: Colors.grey.shade800,
                             elevation: 3,
                             margin: EdgeInsets.all(7),
-                            child: ListTile(
-                              minLeadingWidth: 10,
-                              leading: const Icon(
-                                Icons.attach_money,
-                                color: backgroundIconColor,
+                            child: Container(
+                              child: ListTile(
+                                trailing: Text(
+                                  widget
+                                      ._controller.listaCoinModel[index].price,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                minLeadingWidth: 10,
+                                leading: const Icon(
+                                  Icons.attach_money,
+                                  color: backgroundIconColor,
+                                ),
+                                title: Text(
+                                  getNameCoin(widget._controller
+                                      .listaCoinModel[index].coin.name),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                onTap: () {
+                                  // Criar lógica
+                                },
                               ),
-                              title: Text(
-                                _controller.getMoedaName(
-                                    _controller.listaDeMoedas[index].name),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              onTap: () {
-                                // Criar lógica
-                              },
                             ),
                           )),
                 ),
@@ -100,11 +120,13 @@ class ResultadoPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      /*
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => MoedaBasePage(),
                           ));
+                      */
                     },
                   ),
                 ),

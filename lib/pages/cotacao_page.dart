@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
-import 'package:moedas_app/main.dart';
 import 'package:moedas_app/pages/resultado_page.dart';
+import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 
 class CotacaoPage extends StatelessWidget {
-  final _controller = MoedaBaseController();
-  String moedaEscolhida;
-  CotacaoPage(this.moedaEscolhida);
+  MoedaBaseController _controller;
+  CotacaoPage(this._controller);
 
   @override
   Widget build(BuildContext context) {
-    var moedaNome = _controller.getMoedaName(moedaEscolhida);
-    _controller.atualizaLista(moedaEscolhida);
-    int countMoedas = 0;
+    var moedaNome = getNameCoin(_controller.moedaEscolhida.name);
+    _controller.atualizaLista();
     return Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -68,7 +66,7 @@ class CotacaoPage extends StatelessWidget {
                                 color: backgroundIconColor,
                               ),
                               title: Text(
-                                _controller.getMoedaName(
+                                getNameCoin(
                                     _controller.listaDeMoedas[index].name),
                                 style: TextStyle(
                                     color: Colors.white,
@@ -76,9 +74,11 @@ class CotacaoPage extends StatelessWidget {
                                     fontWeight: FontWeight.w400),
                               ),
                               onTap: () {
-                                setState() {
-                                  _controller.atualizaLista(
-                                      _controller.listaDeMoedas[index].name);
+                                bool isContained = _controller.listaProxima
+                                    .contains(_controller.listaDeMoedas[index]);
+                                if (!isContained) {
+                                  _controller.listaProxima
+                                      .add(_controller.listaDeMoedas[index]);
                                 }
                               },
                             ),
@@ -100,12 +100,10 @@ class CotacaoPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ResultadoPage(moedaEscolhida)),
-                      );
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => ResultadoPage(_controller)),
+                          (Route<dynamic> route) => false);
                     },
                   ),
                 ),

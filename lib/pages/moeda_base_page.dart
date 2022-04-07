@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
 import 'package:moedas_app/pages/cotacao_page.dart';
+import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 
 class MoedaBasePage extends StatelessWidget {
-  final _controller = MoedaBaseController();
+  MoedaBaseController _controller = MoedaBaseController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,20 +59,20 @@ class MoedaBasePage extends StatelessWidget {
                             color: backgroundIconColor,
                           ),
                           title: Text(
-                            _controller.getMoedaName(
-                                _controller.listaDeMoedas[index].name),
+                            getNameCoin(_controller.listaDeMoedas[index].name),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400),
                           ),
                           onTap: () {
-                            Navigator.push(
-                                context,
+                            _controller.moedaEscolhida =
+                                _controller.listaDeMoedas[index];
+                            Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (context) => CotacaoPage(
-                                      _controller.listaDeMoedas[index].name),
-                                ));
+                                    builder: (context) =>
+                                        CotacaoPage(_controller)),
+                                (Route<dynamic> route) => false);
                           },
                         ),
                       )),

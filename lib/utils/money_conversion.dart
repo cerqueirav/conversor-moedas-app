@@ -1,7 +1,7 @@
 import 'package:moedas_app/utils/Enum/coin.dart';
 
-String selectCoin(Coin coinOne, Coin coinTwo) {
+String selectCoin(String coinOne, String coinTwo) {
   String urlBase = "https://economia.awesomeapi.com.br/json/";
 
-  return urlBase + coinOne.name.toString() + "-" + coinTwo.name.toString();
+  return urlBase + coinOne + "-" + coinTwo;
 }
