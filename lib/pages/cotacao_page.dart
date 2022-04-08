@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
 import 'package:moedas_app/pages/resultado_page.dart';
@@ -42,23 +43,24 @@ class CotacaoPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               height: 48,
-              width: 380,
+              width: 250,
             ),
             Center(
                 child: Column(
               children: [
                 Container(
-                  height: 450,
-                  width: 380,
+                  height: 500,
+                  width: 350,
                   child: ListView.builder(
                       itemCount: _controller.listaDeMoedas.length,
                       padding:
-                          EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+                          EdgeInsets.symmetric(horizontal: 1, vertical: 40),
                       itemBuilder: (context, index) => Card(
                             borderOnForeground: false,
                             color: Colors.grey.shade800,
                             elevation: 3,
-                            margin: EdgeInsets.all(7),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 1, vertical: 8),
                             child: ListTile(
                               minLeadingWidth: 10,
                               leading: const Icon(
@@ -85,7 +87,8 @@ class CotacaoPage extends StatelessWidget {
                           )),
                 ),
                 Container(
-                  padding: EdgeInsetsDirectional.all(20),
+                  height: 40,
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 15),
                   alignment: Alignment.bottomRight,
                   child: TextButton(
                     style: TextButton.styleFrom(
@@ -105,6 +108,38 @@ class CotacaoPage extends StatelessWidget {
                               builder: (context) => ResultadoPage(_controller)),
                           (Route<dynamic> route) => false);
                     },
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 165),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(1),
+                        height: 10,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(1),
+                        height: 10,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.blue.shade800,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(1),
+                        height: 10,
+                        width: 10,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

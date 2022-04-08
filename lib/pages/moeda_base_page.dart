@@ -3,9 +3,11 @@ import 'package:moedas_app/controllers/moeda_base_controller.dart';
 import 'package:moedas_app/pages/cotacao_page.dart';
 import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MoedaBasePage extends StatelessWidget {
   MoedaBaseController _controller = MoedaBaseController();
+  PageController _pageController = PageController(initialPage: 1);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,20 +40,21 @@ class MoedaBasePage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               height: 48,
-              width: 300,
+              width: 250,
             ),
             Center(
                 child: Container(
-              height: 570,
-              width: 380,
+              height: 500,
+              width: 350,
               child: ListView.builder(
                   itemCount: _controller.listaDeMoedas.length,
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 1, vertical: 40),
                   itemBuilder: (context, index) => Card(
                         borderOnForeground: false,
                         color: Colors.grey.shade800,
-                        elevation: 3,
-                        margin: EdgeInsets.all(7),
+                        elevation: 5,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 1, vertical: 8),
                         child: ListTile(
                           minLeadingWidth: 10,
                           leading: const Icon(
@@ -77,6 +80,37 @@ class MoedaBasePage extends StatelessWidget {
                         ),
                       )),
             )),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 165),
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(1),
+                    height: 10,
+                    child: Icon(
+                      Icons.circle,
+                      color: Colors.blue.shade800,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(1),
+                    height: 10,
+                    child: Icon(
+                      Icons.circle,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(1),
+                    height: 10,
+                    child: Icon(
+                      Icons.circle,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         )));
   }

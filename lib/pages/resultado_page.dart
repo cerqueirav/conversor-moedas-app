@@ -17,14 +17,14 @@ class ResultadoPage extends StatefulWidget {
 class _ResultadoPageState extends State<ResultadoPage> {
   @override
   void initState() {
+    widget._controller.atualizaLista();
+    widget._controller.fetchCoinModel();
     super.initState();
     Timer(Duration(seconds: 1), () => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
-    widget._controller.atualizaLista();
-    widget._controller.fetchCoinModel();
     var moedaNome = getNameCoin(widget._controller.moedaEscolhida.name);
 
     return Scaffold(
@@ -130,6 +130,38 @@ class _ResultadoPageState extends State<ResultadoPage> {
                           ));
                       */
                     },
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 165),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(1),
+                        height: 10,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(1),
+                        height: 10,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(1),
+                        height: 10,
+                        width: 10,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.blue.shade800,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
