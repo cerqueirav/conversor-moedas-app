@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
-import 'package:moedas_app/pages/moeda_base_page.dart';
 import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 
@@ -78,6 +77,7 @@ class _ResultadoPageState extends State<ResultadoPage> {
                                 margin: EdgeInsets.all(7),
                                 child: Container(
                                   child: ListTile(
+                                    selectedColor: Colors.white,
                                     trailing: Text(
                                       widget._controller.listaCoinModel[index]
                                           .price,

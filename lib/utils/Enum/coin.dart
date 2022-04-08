@@ -11,16 +11,6 @@ List<Coin> fetchCoins() {
   return listaCoin;
 }
 
-bool isContained(List<Coin> lista, Coin coin) {
-  for (int i = 0; i < lista.length; i++) {
-    Coin value = lista.elementAt(i);
-    if (value.name == coin.name) {
-      return true;
-    }
-  }
-  return false;
-}
-
 String getNameCoin(String siglaMoeda) {
   switch (siglaMoeda) {
     case 'ARS':

@@ -76,8 +76,9 @@ class CotacaoPage extends StatelessWidget {
                                     fontWeight: FontWeight.w400),
                               ),
                               onTap: () {
-                                bool isContained = _controller.listaProxima
-                                    .contains(_controller.listaDeMoedas[index]);
+                                bool isContained = _controller.isContained(
+                                    _controller.listaProxima,
+                                    _controller.listaDeMoedas[index]);
                                 if (!isContained) {
                                   _controller.listaProxima
                                       .add(_controller.listaDeMoedas[index]);

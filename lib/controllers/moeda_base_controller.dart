@@ -23,18 +23,29 @@ class MoedaBaseController extends ChangeNotifier {
 
   void atualizaLista() {
     for (int i = 0; i < listaDeMoedas.length; i++) {
-      if (listaDeMoedas.elementAt(i).name.toString() == moedaEscolhida.name) {
+      if (listaDeMoedas.elementAt(i).name.toString() ==
+          getSelectedCoin().name) {
         listaDeMoedas.remove(listaDeMoedas.elementAt(i));
       }
     }
   }
 
   void fetchCoinModel() async {
-    for (int i = 0; i < listaDeMoedas.length; i++) {
+    for (int i = 0; i < listaProxima.length; i++) {
       final repository = await MoedaRoute()
-          .buscarValor(moedaEscolhida, listaDeMoedas.elementAt(i));
+          .buscarValor(moedaEscolhida, listaProxima.elementAt(i));
       listaCoinModel
-          .add(CoinModel(listaDeMoedas.elementAt(i), repository.toString()));
+          .add(CoinModel(listaProxima.elementAt(i), repository.toString()));
     }
+  }
+
+  bool isContained(List<Coin> lista, Coin coin) {
+    for (int i = 0; i < lista.length; i++) {
+      Coin value = lista.elementAt(i);
+      if (value.name == coin.name) {
+        return true;
+      }
+    }
+    return false;
   }
 }
