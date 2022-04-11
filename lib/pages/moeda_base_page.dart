@@ -16,8 +16,24 @@ class _MoedaBasePageState extends State<MoedaBasePage> {
 
   PageController _pageController = PageController(initialPage: 1);
 
+  List<bool> selecionados = [false, false, false, false, false];
+
   @override
   Widget build(BuildContext context) {
+    Color getColor(int index) {
+      if (selecionados[index] != false) {
+        return titleCardColor;
+      }
+      return Colors.white;
+    }
+
+    Color getColorBorder(int index) {
+      if (selecionados[index] != false) {
+        return titleCardColor;
+      }
+      return Colors.grey.shade900;
+    }
+
     return Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -54,40 +70,51 @@ class _MoedaBasePageState extends State<MoedaBasePage> {
                 child: Container(
               height: 500,
               width: 350,
-              child: ListView.builder(
-                  itemCount: _controller.listaDeMoedas.length,
-                  padding: EdgeInsets.symmetric(horizontal: 1, vertical: 40),
-                  itemBuilder: (context, index) => Card(
-                        borderOnForeground: true,
-                        color: Colors.grey.shade800,
-                        elevation: 5,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 1, vertical: 8),
-                        child: ListTile(
-                          selected: index == _selectedIndex,
-                          minLeadingWidth: 10,
-                          leading: const Icon(
-                            Icons.attach_money,
-                            color: backgroundIconColor,
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: ListView.builder(
+                    itemCount: _controller.listaDeMoedas.length,
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 40),
+                    itemBuilder: (context, index) => Card(
+                          borderOnForeground: true,
+                          color: Colors.grey.shade800,
+                          elevation: 5,
+                          margin:
+                              EdgeInsets.symmetric(horizontal: 1, vertical: 8),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color: getColorBorder(index), width: 3),
+                                borderRadius: BorderRadius.circular(5)),
+                            minLeadingWidth: 10,
+                            leading: Icon(
+                              Icons.attach_money,
+                              color: getColor(index),
+                            ),
+                            title: Text(
+                              getNameCoin(
+                                  _controller.listaDeMoedas[index].name),
+                              style: TextStyle(
+                                  color: getColor(index),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selecionados[index] = true;
+                              });
+                              _refresh();
+                              _controller.moedaEscolhida =
+                                  _controller.listaDeMoedas[index];
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CotacaoPage(_controller)),
+                                  (Route<dynamic> route) => false);
+                            },
                           ),
-                          title: Text(
-                            getNameCoin(_controller.listaDeMoedas[index].name),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          onTap: () {
-                            _controller.moedaEscolhida =
-                                _controller.listaDeMoedas[index];
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        CotacaoPage(_controller)),
-                                (Route<dynamic> route) => false);
-                          },
-                        ),
-                      )),
+                        )),
+              ),
             )),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 165),
@@ -122,5 +149,9 @@ class _MoedaBasePageState extends State<MoedaBasePage> {
             ),
           ],
         )));
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(Duration(seconds: 0));
   }
 }

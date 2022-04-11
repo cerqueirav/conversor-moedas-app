@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
 import 'package:moedas_app/pages/resultado_page.dart';
 import 'package:moedas_app/utils/Enum/coin.dart';
@@ -14,9 +15,24 @@ class CotacaoPage extends StatefulWidget {
 }
 
 class _CotacaoPageState extends State<CotacaoPage> {
+  List<bool> selecionados = [false, false, false, false, false];
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    Color getColor(int index) {
+      if (selecionados[index] != false) {
+        return titleCardColor;
+      }
+      return Colors.white;
+    }
+
+    Color getColorBorder(int index) {
+      if (selecionados[index] != false) {
+        return titleCardColor;
+      }
+      return Colors.grey.shade900;
+    }
+
     var moedaNome = getNameCoin(widget._controller.moedaEscolhida.name);
     widget._controller.atualizaLista();
     return Scaffold(
@@ -57,47 +73,57 @@ class _CotacaoPageState extends State<CotacaoPage> {
                 Container(
                   height: 500,
                   width: 350,
-                  child: ListView.builder(
-                      itemCount: widget._controller.listaDeMoedas.length,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 1, vertical: 40),
-                      itemBuilder: (context, index) => Card(
-                            borderOnForeground: false,
-                            color: Colors.grey.shade800,
-                            elevation: 3,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 1, vertical: 8),
-                            child: ListTile(
-                              selected: index == _selectedIndex,
-                              minLeadingWidth: 10,
-                              leading: const Icon(
-                                Icons.attach_money,
-                                color: backgroundIconColor,
+                  child: RefreshIndicator(
+                    onRefresh: _refresh,
+                    child: ListView.builder(
+                        itemCount: widget._controller.listaDeMoedas.length,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 1, vertical: 40),
+                        itemBuilder: (context, index) => Card(
+                              borderOnForeground: false,
+                              color: Colors.grey.shade800,
+                              elevation: 3,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 1, vertical: 8),
+                              child: ListTile(
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: getColorBorder(index), width: 3),
+                                    borderRadius: BorderRadius.circular(5)),
+                                minLeadingWidth: 10,
+                                leading: Icon(
+                                  Icons.attach_money,
+                                  color: getColor(index),
+                                ),
+                                title: Text(
+                                  getNameCoin(widget
+                                      ._controller.listaDeMoedas[index].name),
+                                  style: TextStyle(
+                                      color: getColor(index),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    selecionados[index] = true;
+                                  });
+                                  _refresh();
+                                  setState(() {
+                                    _selectedIndex = index;
+                                  });
+                                  bool isContained = widget._controller
+                                      .isContained(
+                                          widget._controller.listaProxima,
+                                          widget._controller
+                                              .listaDeMoedas[index]);
+                                  if (!isContained) {
+                                    widget._controller.listaProxima.add(widget
+                                        ._controller.listaDeMoedas[index]);
+                                  }
+                                },
                               ),
-                              title: Text(
-                                getNameCoin(widget
-                                    ._controller.listaDeMoedas[index].name),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  _selectedIndex = index;
-                                });
-                                bool isContained = widget._controller
-                                    .isContained(
-                                        widget._controller.listaProxima,
-                                        widget
-                                            ._controller.listaDeMoedas[index]);
-                                if (!isContained) {
-                                  widget._controller.listaProxima.add(
-                                      widget._controller.listaDeMoedas[index]);
-                                }
-                              },
-                            ),
-                          )),
+                            )),
+                  ),
                 ),
                 Container(
                   height: 40,
@@ -160,5 +186,9 @@ class _CotacaoPageState extends State<CotacaoPage> {
             )),
           ],
         )));
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(Duration(seconds: 0));
   }
 }
