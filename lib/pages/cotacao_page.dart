@@ -5,14 +5,20 @@ import 'package:moedas_app/pages/resultado_page.dart';
 import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 
-class CotacaoPage extends StatelessWidget {
+class CotacaoPage extends StatefulWidget {
   MoedaBaseController _controller;
   CotacaoPage(this._controller);
 
   @override
+  State<CotacaoPage> createState() => _CotacaoPageState();
+}
+
+class _CotacaoPageState extends State<CotacaoPage> {
+  int _selectedIndex = 0;
+  @override
   Widget build(BuildContext context) {
-    var moedaNome = getNameCoin(_controller.moedaEscolhida.name);
-    _controller.atualizaLista();
+    var moedaNome = getNameCoin(widget._controller.moedaEscolhida.name);
+    widget._controller.atualizaLista();
     return Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -52,7 +58,7 @@ class CotacaoPage extends StatelessWidget {
                   height: 500,
                   width: 350,
                   child: ListView.builder(
-                      itemCount: _controller.listaDeMoedas.length,
+                      itemCount: widget._controller.listaDeMoedas.length,
                       padding:
                           EdgeInsets.symmetric(horizontal: 1, vertical: 40),
                       itemBuilder: (context, index) => Card(
@@ -62,26 +68,32 @@ class CotacaoPage extends StatelessWidget {
                             margin: EdgeInsets.symmetric(
                                 horizontal: 1, vertical: 8),
                             child: ListTile(
+                              selected: index == _selectedIndex,
                               minLeadingWidth: 10,
                               leading: const Icon(
                                 Icons.attach_money,
                                 color: backgroundIconColor,
                               ),
                               title: Text(
-                                getNameCoin(
-                                    _controller.listaDeMoedas[index].name),
+                                getNameCoin(widget
+                                    ._controller.listaDeMoedas[index].name),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400),
                               ),
                               onTap: () {
-                                bool isContained = _controller.isContained(
-                                    _controller.listaProxima,
-                                    _controller.listaDeMoedas[index]);
+                                setState(() {
+                                  _selectedIndex = index;
+                                });
+                                bool isContained = widget._controller
+                                    .isContained(
+                                        widget._controller.listaProxima,
+                                        widget
+                                            ._controller.listaDeMoedas[index]);
                                 if (!isContained) {
-                                  _controller.listaProxima
-                                      .add(_controller.listaDeMoedas[index]);
+                                  widget._controller.listaProxima.add(
+                                      widget._controller.listaDeMoedas[index]);
                                 }
                               },
                             ),
@@ -106,7 +118,8 @@ class CotacaoPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                              builder: (context) => ResultadoPage(_controller)),
+                              builder: (context) =>
+                                  ResultadoPage(widget._controller)),
                           (Route<dynamic> route) => false);
                     },
                   ),

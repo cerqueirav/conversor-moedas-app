@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:moedas_app/controllers/moeda_base_controller.dart';
 import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
@@ -24,6 +25,22 @@ class _ResultadoPageState extends State<ResultadoPage> {
 
   @override
   Widget build(BuildContext context) {
+    Color getColor(String price) {
+      double coinPrice = double.parse(price);
+      if (coinPrice < 1.0) {
+        return priceColorGreen;
+      }
+
+      if (coinPrice < 5.0) {
+        return priceColorYellow;
+      }
+
+      if (coinPrice >= 5.0) {
+        return priceColorRed;
+      }
+      return Colors.white; // Em caso de Erro
+    }
+
     var moedaNome = getNameCoin(widget._controller.moedaEscolhida.name);
 
     return Scaffold(
@@ -77,12 +94,12 @@ class _ResultadoPageState extends State<ResultadoPage> {
                                 margin: EdgeInsets.all(7),
                                 child: Container(
                                   child: ListTile(
-                                    selectedColor: Colors.white,
                                     trailing: Text(
                                       widget._controller.listaCoinModel[index]
                                           .price,
                                       style: TextStyle(
-                                          color: Colors.white,
+                                          color: getColor(widget._controller
+                                              .listaCoinModel[index].price),
                                           fontSize: 18,
                                           fontWeight: FontWeight.w400),
                                     ),

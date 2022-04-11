@@ -5,9 +5,17 @@ import 'package:moedas_app/utils/Enum/coin.dart';
 import 'package:moedas_app/utils/colors/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class MoedaBasePage extends StatelessWidget {
+class MoedaBasePage extends StatefulWidget {
+  @override
+  State<MoedaBasePage> createState() => _MoedaBasePageState();
+}
+
+class _MoedaBasePageState extends State<MoedaBasePage> {
+  int _selectedIndex = 0;
   MoedaBaseController _controller = MoedaBaseController();
+
   PageController _pageController = PageController(initialPage: 1);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,12 +58,13 @@ class MoedaBasePage extends StatelessWidget {
                   itemCount: _controller.listaDeMoedas.length,
                   padding: EdgeInsets.symmetric(horizontal: 1, vertical: 40),
                   itemBuilder: (context, index) => Card(
-                        borderOnForeground: false,
+                        borderOnForeground: true,
                         color: Colors.grey.shade800,
                         elevation: 5,
                         margin:
                             EdgeInsets.symmetric(horizontal: 1, vertical: 8),
                         child: ListTile(
+                          selected: index == _selectedIndex,
                           minLeadingWidth: 10,
                           leading: const Icon(
                             Icons.attach_money,
