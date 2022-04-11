@@ -117,28 +117,28 @@ class _MoedaBasePageState extends State<MoedaBasePage> {
               ),
             )),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 165),
+              padding: EdgeInsets.symmetric(vertical: 25, horizontal: 165),
               child: Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(1),
-                    height: 10,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 1),
+                    height: 1,
                     child: Icon(
                       Icons.circle,
                       color: Colors.blue.shade800,
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(1),
-                    height: 10,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 1),
+                    height: 1,
                     child: Icon(
                       Icons.circle,
                       color: Colors.white,
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(1),
-                    height: 10,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 1),
+                    height: 1,
                     child: Icon(
                       Icons.circle,
                       color: Colors.white,
