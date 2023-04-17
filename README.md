@@ -1,4 +1,4 @@
-# moedas_app
+# conversor-moedas-app
 
 A new Flutter project.
 
